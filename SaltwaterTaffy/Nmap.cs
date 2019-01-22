@@ -497,7 +497,7 @@ namespace SaltwaterTaffy
         public override string ToString()
         {
             return
-                _nmapOptions.Aggregate(new StringBuilder(), (sb, kvp) => sb.AppendFormat("{0} {1} ", kvp.Key, kvp.Value),
+                _nmapOptions.Aggregate(new StringBuilder(), (sb, kvp) => sb.Append(string.IsNullOrEmpty(kvp.Value) ? $"{kvp.Key} " : $" {kvp.Key} \"{kvp.Value}\" "),
                                        sb => sb.ToString()).Trim();
         }
     }
