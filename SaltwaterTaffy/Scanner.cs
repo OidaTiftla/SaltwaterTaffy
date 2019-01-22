@@ -44,7 +44,8 @@ namespace SaltwaterTaffy
                                         HostnamesSection(
                                             x.Items.OfType<hostnames>().DefaultIfEmpty(null).FirstOrDefault()),
                                     OsMatches = OsMatchesSection(
-                                        x.Items.OfType<os>().DefaultIfEmpty(null).FirstOrDefault())
+                                        x.Items.OfType<os>().DefaultIfEmpty(null).FirstOrDefault()),
+                                    Reason = x.status?.reason,
                                 })
                         : Enumerable.Empty<Host>();
         }
