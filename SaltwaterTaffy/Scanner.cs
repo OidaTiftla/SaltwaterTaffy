@@ -257,6 +257,21 @@ namespace SaltwaterTaffy
         }
 
         /// <summary>
+        ///     Perform ping discovery on the intended target (preferably a subnet or IP range)
+        /// </summary>
+        /// <returns>A collection of Hosts detailing the results of the discovery</returns>
+        public IEnumerable<Host> PingDiscovery()
+        {
+            NmapContext ctx = GetContext();
+            ctx.Options.AddAll(new[]
+                {
+                    NmapFlag.PingScan,
+                });
+
+            return new ScanResult(ctx.Run()).Hosts;
+        }
+
+        /// <summary>
         ///     Determine whether the intended target is firewalled.
         /// </summary>
         /// <returns>Returns true if the intended targer is firewalled and false otherwise. If used on a subnet or IP range, this determines if any host has a firewall.</returns>
