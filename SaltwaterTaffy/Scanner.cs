@@ -160,7 +160,10 @@ namespace SaltwaterTaffy
         SctpCookieEcho,
 
         // UDP-only scan
-        Udp
+        Udp,
+
+        // Ping scan
+        Ping,
     }
 
     /// <summary>
@@ -180,7 +183,8 @@ namespace SaltwaterTaffy
                 {ScanType.Maimon, NmapFlag.MaimonScan},
                 {ScanType.SctpInit, NmapFlag.SctpInitScan},
                 {ScanType.SctpCookieEcho, NmapFlag.CookieEchoScan},
-                {ScanType.Udp, NmapFlag.UdpScan}
+                {ScanType.Udp, NmapFlag.UdpScan},
+                {ScanType.Ping, NmapFlag.PingScan},
             };
 
         /// <summary>
