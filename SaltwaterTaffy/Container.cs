@@ -3,6 +3,7 @@
 // Released under the GNU GPLv2 or any later version
 using System.Collections.Generic;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
 namespace SaltwaterTaffy.Container
@@ -55,6 +56,8 @@ namespace SaltwaterTaffy.Container
     public struct Host
     {
         public IPAddress Address { get; set; }
+        public PhysicalAddress MacAddress { get; set; }
+        public string MacVendor { get; set; }
         public IEnumerable<string> Hostnames { get; set; }
         public IEnumerable<Port> Ports { get; set; }
         public IEnumerable<ExtraPorts> ExtraPorts { get; set; }

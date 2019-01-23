@@ -31,22 +31,27 @@ namespace SaltwaterTaffy
             Down = int.Parse(result.runstats.hosts.down);
             Hosts = result.Items != null
                         ? result.Items.OfType<host>().Select(
-                            x => new Host
-                                {
-                                    Address = IPAddress.Parse(x.address.addr),
-                                    Ports =
-                                        PortsSection(
-                                            x.Items.OfType<ports>().DefaultIfEmpty(null).FirstOrDefault()),
-                                    ExtraPorts =
-                                        ExtraPortsSection(
-                                            x.Items.OfType<ports>().DefaultIfEmpty(null).FirstOrDefault()),
-                                    Hostnames =
-                                        HostnamesSection(
-                                            x.Items.OfType<hostnames>().DefaultIfEmpty(null).FirstOrDefault()),
-                                    OsMatches = OsMatchesSection(
-                                        x.Items.OfType<os>().DefaultIfEmpty(null).FirstOrDefault()),
-                                    Reason = x.status?.reason,
-                                })
+                            x => {
+                                var macAddress = x.Items.OfType<address>().FirstOrDefault(y => y.addrtype == addressAddrtype.mac);
+                                return new Host
+                                    {
+                                        Address = IPAddress.Parse(x.address.addr),
+                                        MacAddress = macAddress is null ? null : PhysicalAddress.Parse(macAddress.addr?.Replace(':', '-')),
+                                        MacVendor = macAddress?.vendor,
+                                        Ports =
+                                            PortsSection(
+                                                x.Items.OfType<ports>().DefaultIfEmpty(null).FirstOrDefault()),
+                                        ExtraPorts =
+                                            ExtraPortsSection(
+                                                x.Items.OfType<ports>().DefaultIfEmpty(null).FirstOrDefault()),
+                                        Hostnames =
+                                            HostnamesSection(
+                                                x.Items.OfType<hostnames>().DefaultIfEmpty(null).FirstOrDefault()),
+                                        OsMatches = OsMatchesSection(
+                                            x.Items.OfType<os>().DefaultIfEmpty(null).FirstOrDefault()),
+                                        Reason = x.status?.reason,
+                                    };
+                            })
                         : Enumerable.Empty<Host>();
         }
 
