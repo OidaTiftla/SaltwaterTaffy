@@ -26,6 +26,10 @@ namespace SaltwaterTaffy
         /// <param name="result">The result of parsing an nmaprun </param>
         public ScanResult(nmaprun result)
         {
+            if (result?.runstats?.finished?.exit == finishedExit.error)
+            {
+                throw new NmapException(result.runstats.finished.errormsg);
+            }
             Total = int.Parse(result.runstats.hosts.total);
             Up = int.Parse(result.runstats.hosts.up);
             Down = int.Parse(result.runstats.hosts.down);
