@@ -260,13 +260,17 @@ namespace SaltwaterTaffy
         ///     Perform ping discovery on the intended target (preferably a subnet or IP range)
         /// </summary>
         /// <returns>A collection of Hosts detailing the results of the discovery</returns>
-        public IEnumerable<Host> PingDiscovery()
+        public IEnumerable<Host> PingDiscovery(double maxRate = -1)
         {
             NmapContext ctx = GetContext();
             ctx.Options.AddAll(new[]
                 {
                     NmapFlag.PingScan,
                 });
+            if (maxRate > 0)
+            {
+                ctx.Options[NmapFlag.MaxRate] = maxRate.ToString(CultureInfo.InvariantCulture);
+            }
 
             return new ScanResult(ctx.Run()).Hosts;
         }
